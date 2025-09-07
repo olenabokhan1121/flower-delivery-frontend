@@ -1,12 +1,26 @@
-# React + Vite
+🌸Flower Delivery App. Base level. Fast, beautiful, and fresh flower delivery.
+Choose the perfect bouquet anytime, anywhere.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+✨ Features 📍 Flower shop list in the sidebar📂 Flower catalog with filtering
+by price 🧡 Favorites: users can save flowers 📄 Detailed page for each order 🔍
+Backend-powered pagination and server-side filtering ✅ Form validation and
+success notification on booking 📦 Persistent global state using Redux and
+redux-persist 🛠 Technologies React 19 + Vite Redux Toolkit for global state
+React Router v7 for navigation Axios for HTTP requests CSS Modules (you can
+replace with MUI or styled-components) Redux Persist to store carts in
+localStorage 🔗 Live Demo 🔗 View deployed site on Vercel
+https://flower-delivery-frontend.vercel.app/
 
-Currently, two official plugins are available:
+📦 Installation git clone
+https://github.com/olenabokhan1121/flower-delivery-frontend cd
+flower-delivery-frontend npm install npm run dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔐 Built with the MERN stack (MongoDB, Express.js, React.js, and Node.js).
 
-## Expanding the ESLint configuration
+Pages
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Shop page with filters & load more Shopping cart page with booking form
+
+👩‍💻 Author [Olena Bokhan](https://github.com/olenabokhan1121)— Frontend
+Developer. Motivated, systematic, and detail-focused. Passionate about blending
+functional architecture with elegant design.
