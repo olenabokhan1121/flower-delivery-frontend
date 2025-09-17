@@ -15,7 +15,9 @@ https://flower-delivery-frontend.vercel.app/
 https://github.com/olenabokhan1121/flower-delivery-frontend cd
 flower-delivery-frontend npm install npm run dev
 
-🔐 Built with the MERN stack (MongoDB, Express.js, React.js, and Node.js).
+🔐 Built with the MERN stack (MongoDB, Express.js, React.js, and Node.js). This
+backend service is deployed and running on
+[Render.com](https://flower-delivery-app-gj8q.onrender.com).
 
 Pages
 
