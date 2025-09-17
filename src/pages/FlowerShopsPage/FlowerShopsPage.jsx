@@ -1,174 +1,125 @@
-/*import { useState, useEffect, useRef, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import css from './HomePage.module.css';
+import css from './FlowerShopsPage.module.css';
+import { FlowerList } from '../../components/FlowersList/FlowersList';
+import Loading from '../../components/Loading/Loading';
+import { useState, useEffect, useRef } from 'react';
+import { fetchShops, fetchAllFlowers, fetchFlowersByShop } from '../../utils';
 
-import Hero from '../../components/Hero/Hero';
-import RecipesList from '../../components/RecipesList/RecipesList';
-import Filters from '../../components/Filters/Filters';
 import LoadMoreBtn from '../../components/LoadMoreBtn/LoadMoreBtn';
-import Pagination from '../../components/Pagination/Pagination.jsx';
-
-import {
-  fetchRecipes,
-  fetchRecipesByQuery,
-  
-} from '../../redux/recipes/operations';
-import { clearRecipes, clearNotFound } from '../../redux/recipes/slice';
-import { changeFilter } from '../../redux/filters/slice';
-import Loading from '../../components/Loading/Loading.jsx';*/
 
 export function FlowerShopsPage() {
-  /*
-  const dispatch = useDispatch();
-  const location = useLocation();
+  const [shops, setShops] = useState([]);
+  const [flowers, setFlowers] = useState([]);
+  const [selectedShopId, setSelectedShopId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const recipes = useSelector(state =>
-    Array.isArray(state.recipes.items) ? state.recipes.items : []
-  );
-  const totalItems = useSelector(state => state.recipes.totalItems);
-  const searchQuery = useSelector(state => state.filters.name);
-  const [startIndex, setStartIndex] = useState(null);
   const [page, setPage] = useState(1);
-  const recipesPerPage = 12;
+  const perPage = 12;
 
-  const loading = useSelector(state => state.recipes.loading);
-  const [selectedFilters, setSelectedFilters] = useState({
-    category: '',
-    ingredient: '',
-  });
-
-  // Новый флаг: включён ли поиск/фильтрация? (логика замены LoadMoreBtn на Pagination "Илья")
-  const [isFiltering, setIsFiltering] = useState(false);
-  const [isPagination, setIsPagination] = useState(false);
-  const recipesListRef = useRef(null);
-
-  const handleFilterChange = useCallback(filters => {
-    setSelectedFilters(prevFilters => {
-      if (
-        prevFilters.category === filters.category &&
-        prevFilters.ingredient === filters.ingredient
-      ) {
-        return prevFilters;
+  useEffect(() => {
+    const getShops = async () => {
+      try {
+        const response = await fetchShops();
+        setShops(response.data);
+      } catch (error) {
+        console.error('Something went wrong!', error);
       }
-      return filters;
-    });
-    setPage(1);
-    setIsPagination(false);
-
-    // проверка активен ли хоть один фильтр. (логика замены LoadMoreBtn на Pagination "Илья")
-    const filterActive =
-      filters.category.trim() !== '' || filters.ingredient.trim() !== '';
-    setIsFiltering(filterActive);
+    };
+    getShops();
   }, []);
 
   useEffect(() => {
-    if (location.pathname === '/') {
-      dispatch(changeFilter({ name: '' }));
-      dispatch(clearNotFound());
-    }
-  }, [location.pathname, dispatch]);
+    const getFlowers = async () => {
+      setLoading(true);
+      try {
+        const params = { page, perPage };
+        const response = selectedShopId
+          ? await fetchFlowersByShop(selectedShopId, params)
+          : await fetchAllFlowers(params);
 
-  useEffect(() => {
-    if (searchQuery) return;
+        const flowersData = selectedShopId
+          ? response.data.data.flowers
+          : response.data.data.enrichedFlowers;
 
-    dispatch(
-      fetchRecipes({
-        page,
-        perPage: recipesPerPage,
-        category: selectedFilters.category,
-        ingredient: selectedFilters.ingredient,
+        setFlowers(flowersData);
+      } catch (error) {
+        console.error('Something went wrong!', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getFlowers();
+  }, [selectedShopId, page]);
 
-        append: page > 1 && (searchQuery || isFiltering),
-      })
-    ).unwrap();
-  }, [dispatch, page, selectedFilters, searchQuery, isFiltering]);
+  const totalItems = flowers.length;
 
-  useEffect(() => {
-    if (!searchQuery) return;
+  const [startIndex, setStartIndex] = useState(null);
 
-    setIsFiltering(true);
-    setIsPagination(false);
-    setPage(1);
-    dispatch(clearRecipes());
-    dispatch(fetchRecipesByQuery(searchQuery)).unwrap();
-  }, [dispatch, searchQuery]);
+  const flowersListRef = useRef(null);
 
   const loadMore = () => {
-    setIsPagination(false);
     const nextPage = page + 1;
     setPage(nextPage);
 
-    setStartIndex((nextPage - 1) * recipesPerPage);
+    setStartIndex((nextPage - 1) * perPage);
   };
-
-  useEffect(() => {
-    if (!loading && isPagination) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [loading, isPagination]);
 
   useEffect(() => {
     if (
       !loading &&
       startIndex !== null &&
-      recipes[startIndex] &&
-      recipesListRef.current
+      flowers[startIndex] &&
+      flowersListRef.current
     ) {
-      recipesListRef.current.scrollIntoView({
+      flowersListRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
       setStartIndex(null);
     }
-  }, [loading, recipes, startIndex]);
-  const recipesToShow = recipes.slice(0, page * recipesPerPage);*/
+  }, [loading, flowers, startIndex]);
 
-  return /*
-    <div className={css.homePage}>
-      <Hero setIsFiltering={setIsFiltering} />
-      <section className={css.container}>
-        <div>
-    <h2 />className={css.title}>
-      {searchQuery ? `Search Results for "${searchQuery}"` : 'Recipes'}
-    </h2>*/ Hello /*
-        </div>
-        <Filters
-          totalItems={totalItems}
-          onChange={handleFilterChange}
-          setIsFiltering={setIsFiltering}
-        />
-        {loading && isPagination && <Loading />}
-        <RecipesList
-          recipes={recipesToShow}
-          loading={false}
-          ref={recipesListRef}
-          startIndex={startIndex}
-        />
-
-        {loading && !isPagination && (
-          <div className={css.loaderWrapper}>
-            <Loading />
-          </div>
-        )}
-        {searchQuery || isFiltering ? (
-          <div>
-            {page * recipesPerPage < totalItems && !loading && (
-              <LoadMoreBtn onClick={loadMore} />
-            )}
-          </div>
-        ) : (
-          <Pagination
-            page={page}
-            perPage={recipesPerPage}
-            totalItems={totalItems}
-            onPageChange={newPage => {
-              setIsPagination(true);
-              setStartIndex(0);
-              setPage(newPage);
+  return (
+    <div className={css.container}>
+      <aside className={css.aside}>
+        <h2>Shops:</h2>
+        <ul className={css.ul}>
+          <li
+            className={!selectedShopId ? css.activeLi : css.li}
+            onClick={() => {
+              setSelectedShopId(null);
+              setPage(1);
             }}
+          >
+            All Flowers
+          </li>
+          {shops.map(shop => (
+            <li
+              key={shop._id}
+              className={selectedShopId === shop._id ? css.activeLi : css.li}
+              onClick={() => {
+                setSelectedShopId(shop._id);
+                setPage(1);
+              }}
+            >
+              {shop.name}
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <FlowerList
+            flowers={flowers}
+            loading={false}
+            ref={flowersListRef}
+            startIndex={startIndex}
           />
-        )}
-      </section>
-    </div>*/;
+          {page * perPage < totalItems && <LoadMoreBtn onClick={loadMore} />}
+        </>
+      )}
+    </div>
+  );
 }

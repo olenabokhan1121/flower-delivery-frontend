@@ -1,0 +1,12 @@
+.flowerslist {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
+  gap: 24px;
+  border: 2px solid var(--gray);
+}
+
+.noFlowersText {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+}

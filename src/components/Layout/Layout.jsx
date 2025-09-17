@@ -4,7 +4,8 @@ import { useState } from 'react';
 export const Layout = () => {
   const location = useLocation();
 
-  const isFlowersPage = location.pathname.startsWith('/flowers');
+  const isFlowersPage =
+    location.pathname === '/' || location.pathname.startsWith('/flowers');
   const [sortBy, setSortBy] = useState('price');
 
   const handleSortChange = type => {

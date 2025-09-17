@@ -1,0 +1,18 @@
+.button {
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 8px;
+  border: none;
+  width: 289px;
+  height: 54px;
+
+  padding: 0;
+  display: block;
+  margin: 0 auto;
+  margin-top: 24px;
+  transition: background 0.3s ease;
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+  transition: border 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}

@@ -1,0 +1,69 @@
+.card {
+  min-width: 288px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #a3b18a;
+  border: 1px solid #e3e3e3;
+  border-radius: 16px;
+  padding: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.imageCard {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  height: 43px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #000;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.Button {
+  height: 100%;
+  flex: 1;
+  background: transparent;
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.learnMoreButton:hover {
+  background-color: #588157;
+  color: #fff;
+  border: none;
+}
+.icon {
+  stroke: currentColor;
+  color: #000000;
+}
+
+.learnMoreButton:active {
+  border: 1px solid #fff;
+}

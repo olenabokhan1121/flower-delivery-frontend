@@ -56,7 +56,8 @@ a {
 button,
 input,
 select,
-textarea {
+textarea,
+li {
   font: inherit;
   margin: 0;
   padding: 0;

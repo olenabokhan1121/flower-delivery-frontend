@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+.aside {
+  width: 250px;
+  background-color: var(--badges);
+  padding: 8px;
+}
+.ul {
+  border: 2px solid var(--gray);
+  border-radius: 2px;
+}
+.li {
+  margin-bottom: 24px;
+  border: 2px solid var(--gray);
+  border-radius: 2px;
+  color: var(--button);
+}
+.activeLi {
+  font-weight: bold;
+  background-color: var(--button-hover);
+}
