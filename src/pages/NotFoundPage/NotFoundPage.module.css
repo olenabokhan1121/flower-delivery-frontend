@@ -1,0 +1,23 @@
+.notFoundContainer {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  height: 100vh;
+  text-align: center;
+}
+.text {
+  padding: 50px;
+  font-weight: 500;
+  font-size: 25px;
+  color: #000;
+}
+
+.link {
+  font-weight: 500;
+  color: #344e41;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+.link:hover {
+  color: #588157;
+}

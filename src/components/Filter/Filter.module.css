@@ -1,0 +1,18 @@
+.filter {
+  display: flex;
+  gap: 16px;
+}
+
+.filter button {
+  all: unset;
+  color: var(--button);
+  transition: color 0.2s ease;
+}
+
+.filter button:hover {
+  color: var(--button-hover);
+}
+
+.filter .active {
+  text-decoration: underline;
+}

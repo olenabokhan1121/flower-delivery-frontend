@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+/*import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import css from './HomePage.module.css';
@@ -12,13 +12,14 @@ import Pagination from '../../components/Pagination/Pagination.jsx';
 import {
   fetchRecipes,
   fetchRecipesByQuery,
-  //toggleFavoriteRecipeAsync,
+  
 } from '../../redux/recipes/operations';
 import { clearRecipes, clearNotFound } from '../../redux/recipes/slice';
 import { changeFilter } from '../../redux/filters/slice';
-import Loading from '../../components/Loading/Loading.jsx';
+import Loading from '../../components/Loading/Loading.jsx';*/
 
-export default function HomePage() {
+export function FlowerShopsPage() {
+  /*
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -30,7 +31,7 @@ export default function HomePage() {
   const [startIndex, setStartIndex] = useState(null);
   const [page, setPage] = useState(1);
   const recipesPerPage = 12;
-  // const [loading, setLoading] = useState(false);
+
   const loading = useSelector(state => state.recipes.loading);
   const [selectedFilters, setSelectedFilters] = useState({
     category: '',
@@ -71,49 +72,28 @@ export default function HomePage() {
   useEffect(() => {
     if (searchQuery) return;
 
-    // setLoading(true);
     dispatch(
       fetchRecipes({
         page,
         perPage: recipesPerPage,
         category: selectedFilters.category,
         ingredient: selectedFilters.ingredient,
-        //append: false,
+
         append: page > 1 && (searchQuery || isFiltering),
-        //append: !isPagination,
-        //append: page > 1, // <-- Ось ключова зміна
       })
     ).unwrap();
-    // .then(() => setLoading(false))
-    // .catch(() => setLoading(false));
-  }, [
-    dispatch,
-    page,
-    selectedFilters,
-    searchQuery,
-    isFiltering /*isPagination*/,
-  ]);
+  }, [dispatch, page, selectedFilters, searchQuery, isFiltering]);
 
   useEffect(() => {
     if (!searchQuery) return;
 
-    // setLoading(true);
-    setIsFiltering(true); //  При поиске — тоже filtering (логика замены LoadMoreBtn на Pagination "Илья")
+    setIsFiltering(true);
     setIsPagination(false);
     setPage(1);
     dispatch(clearRecipes());
     dispatch(fetchRecipesByQuery(searchQuery)).unwrap();
-    // .then(() => setLoading(false))
-    // .catch(() => setLoading(false));
   }, [dispatch, searchQuery]);
 
-  /*const handleToggleFavorite = (id) => {
-    dispatch(toggleFavoriteRecipeAsync({ recipeId: id }));
-  };*/
-
-  /*const loadMore = () => {
-    setPage((prev) => prev + 1);
-  };*/
   const loadMore = () => {
     setIsPagination(false);
     const nextPage = page + 1;
@@ -122,46 +102,6 @@ export default function HomePage() {
     setStartIndex((nextPage - 1) * recipesPerPage);
   };
 
-  // useEffect(() => {
-  // if (
-  // startIndex !== null &&
-  // recipes[startIndex] !== undefined &&
-  //recipesListRef.current
-  // ) {
-  // requestAnimationFrame(() => {
-  // recipesListRef.current.scrollIntoView({
-  //   behavior: "smooth",
-  //    block: "start",
-  //   });
-  //  });
-  //  }
-  // }, [recipes, startIndex]);
-
-  // useEffect(() => {
-  //  if (recipesListRef.current && startIndex !== null) {
-  //  const recipeExists = recipes[startIndex];
-
-  //   requestAnimationFrame(() => {
-  //   if (isPagination) {
-  //     window.scrollTo({ top: 0, behavior: "smooth" });
-  //    } else if (recipeExists) {
-  //   recipesListRef.current.scrollIntoView({
-  //     behavior: "smooth",
-  //      block: "start",
-  //    });
-  //   }
-
-  // ⬅️ Сбрасываем startIndex ТОЛЬКО после scroll
-  //  setStartIndex(null);
-  //   });
-  // }
-  // }, [recipes, startIndex, isPagination]);
-
-  //useEffect(() => {
-  // if (!loading) {
-  //  setStartIndex(null);
-  // }
-  // }, [loading]);
   useEffect(() => {
     if (!loading && isPagination) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -182,17 +122,16 @@ export default function HomePage() {
       setStartIndex(null);
     }
   }, [loading, recipes, startIndex]);
-  const recipesToShow = recipes.slice(0, page * recipesPerPage);
+  const recipesToShow = recipes.slice(0, page * recipesPerPage);*/
 
-  return (
+  return /*
     <div className={css.homePage}>
       <Hero setIsFiltering={setIsFiltering} />
       <section className={css.container}>
         <div>
-          {/* 🆕 Динамический заголовок — меняется при поиске */}
-          <h2 className={css.title}>
-            {searchQuery ? `Search Results for "${searchQuery}"` : 'Recipes'}
-          </h2>
+    <h2 />className={css.title}>
+      {searchQuery ? `Search Results for "${searchQuery}"` : 'Recipes'}
+    </h2>*/ Hello /*
         </div>
         <Filters
           totalItems={totalItems}
@@ -203,13 +142,10 @@ export default function HomePage() {
         <RecipesList
           recipes={recipesToShow}
           loading={false}
-          //onToggleFavorite={handleToggleFavorite}
           ref={recipesListRef}
           startIndex={startIndex}
         />
 
-        {/* Условие для LoadMoreBtn (логика замены LoadMoreBtn на Pagination
-        "Илья") */}
         {loading && !isPagination && (
           <div className={css.loaderWrapper}>
             <Loading />
@@ -217,26 +153,22 @@ export default function HomePage() {
         )}
         {searchQuery || isFiltering ? (
           <div>
-            {
-              /*!searchQuery && */ page * recipesPerPage < totalItems &&
-                !loading && <LoadMoreBtn onClick={loadMore} />
-            }
-          </div> /*
-          recipes.length >= recipesPerPage &&
-          !loading && <LoadMoreBtn onClick={loadMore} />*/
+            {page * recipesPerPage < totalItems && !loading && (
+              <LoadMoreBtn onClick={loadMore} />
+            )}
+          </div>
         ) : (
           <Pagination
             page={page}
             perPage={recipesPerPage}
             totalItems={totalItems}
             onPageChange={newPage => {
-              setIsPagination(true); // Пагинация → перерисовка
+              setIsPagination(true);
               setStartIndex(0);
               setPage(newPage);
             }}
           />
         )}
       </section>
-    </div>
-  );
+    </div>*/;
 }

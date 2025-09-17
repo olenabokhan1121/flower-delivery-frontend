@@ -22,17 +22,19 @@ const NotFoundPage = lazy(() =>
 export default function App() {
   return (
     <div className={css.app}>
-      <Layout>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/flowers" element={<FlowerShopsPage />} />
-            <Route path="/order" element={<OrderDetailsPage />} />
-            <Route path="/cart" element={<ShoppingCartPage />} />
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<FlowerShopsPage />} />
+            <Route path="flowers" element={<FlowerShopsPage />} />
+
+            <Route path="cart" element={<ShoppingCartPage />} />
 
             <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </Layout>
+          </Route>
+          <Route path="order" element={<OrderDetailsPage />} />
+        </Routes>
+      </Suspense>
 
       <NotificationToast />
     </div>
