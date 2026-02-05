@@ -1,6 +1,7 @@
 import styles from './FlowerCard.module.css';
 import { useNavigate } from 'react-router-dom';
 import { forwardRef } from 'react';
+import SaveFavoriteButton from '../SaveFavoriteButton/SaveFavoriteButton';
 const FlowerCard = forwardRef(({ flower }, ref) => {
   const navigate = useNavigate();
 
@@ -9,21 +10,8 @@ const FlowerCard = forwardRef(({ flower }, ref) => {
   return (
     <div ref={ref} className={styles.card}>
       <img src={imageUrl} alt={name} className={styles.imageCard} />
-      <button
-        onClick={handleToggle}
-        className={styles.heart}
-        aria-label={isFavorite ? 'Remove' : 'Add to favorites'}
-      >
-        <svg className={styles.icon} width="16" height="16">
-          <use
-            href={
-              isFavorite
-                ? `/sprites/symbol-defs.svg#icon-Property-1Active`
-                : `/sprites/symbol-defs.svg#icon-Property-1Default`
-            }
-          />
-        </svg>
-      </button>
+      <SaveFavoriteButton id={_id} />
+
       <div className={styles.form}>
         <h3 className={styles.title}>{name}</h3>{' '}
         <div>

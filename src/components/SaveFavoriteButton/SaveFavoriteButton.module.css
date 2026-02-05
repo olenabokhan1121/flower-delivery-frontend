@@ -1,0 +1,11 @@
+.heart {
+  background-color: transparent;
+}
+.heart:active {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.active {
+  --color1: #b87c4c;
+}
