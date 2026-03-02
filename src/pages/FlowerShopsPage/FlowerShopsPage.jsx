@@ -39,8 +39,11 @@ export function FlowerShopsPage() {
         const flowersData = selectedShopId
           ? response.data.data.flowers
           : response.data.data.enrichedFlowers;
-
-        setFlowers(flowersData);
+        if (page === 1) {
+          setFlowers(flowersData);
+        } else {
+          setFlowers(prev => [...prev, ...flowersData]);
+        }
       } catch (error) {
         console.error('Something went wrong!', error);
       } finally {

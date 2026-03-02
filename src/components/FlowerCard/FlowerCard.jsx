@@ -5,15 +5,15 @@ import SaveFavoriteButton from '../SaveFavoriteButton/SaveFavoriteButton';
 const FlowerCard = forwardRef(({ flower }, ref) => {
   const navigate = useNavigate();
 
-  const { _id, shopId, name, imageUrl } = flower;
+  const { _id, name, imageUrl, isFavorite } = flower;
 
   return (
     <div ref={ref} className={styles.card}>
       <img src={imageUrl} alt={name} className={styles.imageCard} />
-      <SaveFavoriteButton id={_id} />
+      <SaveFavoriteButton id={_id} isFavorite={isFavorite} />
 
       <div className={styles.form}>
-        <h3 className={styles.title}>{name}</h3>{' '}
+        <h3 className={styles.title}>{name}</h3>
         <div>
           <button className={styles.Button} onClick={() => navigate(`/cart`)}>
             Add to cart

@@ -17,10 +17,7 @@ export const toggleFavoriteFlowerAsync = createAsyncThunk(
     }
   }
 );
-/* в картці <SaveFavoriteButton
-  id={flower._id}
-  isFavorite={flower.isFavorite}
-/>
+/* 
 cлайс редьюсер builder
   .addCase(toggleFavoriteFlowerAsync.pending, (state, action) => {
     const { id } = action.meta.arg;
