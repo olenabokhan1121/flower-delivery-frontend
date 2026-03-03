@@ -14,6 +14,11 @@ export function FlowerShopsPage() {
 
   const [page, setPage] = useState(1);
   const perPage = 12;
+  const handleToggleFavorite = id => {
+    setFlowers(prev =>
+      prev.map(f => (f._id === id ? { ...f, isFavorite: !f.isFavorite } : f))
+    );
+  };
 
   useEffect(() => {
     const getShops = async () => {
@@ -119,6 +124,7 @@ export function FlowerShopsPage() {
             loading={false}
             ref={flowersListRef}
             startIndex={startIndex}
+            onToggleFavorite={handleToggleFavorite}
           />
           {page * perPage < totalItems && <LoadMoreBtn onClick={loadMore} />}
         </>

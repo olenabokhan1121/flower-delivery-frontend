@@ -1,14 +1,18 @@
 import styles from './SaveFavoriteButton.module.css';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { toggleFavoriteFlowerAsync } from '../../redux/flowers/operations';
+import { addFavoriteFlower, removeFavoriteFlower } from '../../utils';
 
-function SaveFavoriteButton({ id, isFavorite }) {
-  const dispatch = useDispatch();
-
+function SaveFavoriteButton({ id, isFavorite, onToggle }) {
   const handleToggle = async () => {
     try {
-      await dispatch(toggleFavoriteFlowerAsync({ id, isFavorite })).unwrap();
+      if (isFavorite) {
+        await removeFavoriteFlower(id);
+      } else {
+        await addFavoriteFlower(id);
+      }
+
+      onToggle(id); // оновлюємо локальний state
     } catch (error) {
       toast.error('Failed to update favorites 😢');
     }

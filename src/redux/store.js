@@ -1,8 +1,8 @@
-/*import { configureStore } from "@reduxjs/toolkit";
-import filtersReducer from "./filters/slice";
-import { authReducer } from "./auth/slice";
-import { recipesReducer } from "./recipes/slice";
-import storage from "redux-persist/lib/storage";
+/*import { configureStore } from '@reduxjs/toolkit';
+//import filtersReducer from "./filters/slice";
+//import { authReducer } from "./auth/slice";
+//import { recipesReducer } from "./recipes/slice";
+import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
   persistReducer,
@@ -12,9 +12,8 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-
-const persistedAuthReducer = persistReducer(
+} from 'redux-persist';
+/*const persistedAuthReducer = persistReducer(
   {
     key: "auth",
     storage,
@@ -25,11 +24,9 @@ const persistedAuthReducer = persistReducer(
 
 export const store = configureStore({
   reducer: {
-    filters: filtersReducer,
-    auth: persistedAuthReducer,
-    recipes: recipesReducer,
+    cart: cartReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
@@ -37,4 +34,5 @@ export const store = configureStore({
     }),
 });
 
-export const persistor = persistStore(store);*/
+export const persistor = persistStore(store);
+*/

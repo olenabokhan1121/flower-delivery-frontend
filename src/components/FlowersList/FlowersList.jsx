@@ -3,7 +3,7 @@ import FlowerCard from '../FlowerCard/FlowerCard';
 import styles from './FlowersList.module.css';
 
 export const FlowerList = forwardRef(
-  ({ flowers, loading, startIndex }, ref) => {
+  ({ flowers, loading, startIndex, onToggleFavorite }, ref) => {
     if (!loading && flowers.length === 0) {
       return <p className={styles.noFlowersText}>No flowers found.</p>;
     }
@@ -18,6 +18,7 @@ export const FlowerList = forwardRef(
               key={flower._id}
               ref={isFirstNew ? ref : null}
               flower={flower}
+              onToggleFavorite={onToggleFavorite}
             />
           );
         })}
