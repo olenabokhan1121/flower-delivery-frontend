@@ -25,7 +25,7 @@ function SaveFavoriteButton({ id, isFavorite, onToggle }) {
       aria-label={isFavorite ? 'Remove' : 'Add to favorites'}
     >
       <svg className={styles.icon} width="16" height="16">
-        <use href="public/sprites/icons/symbol-defs.svg#icon-heart" />
+        <use href="/sprites/icons/symbol-defs.svg#icon-heart" />
       </svg>
     </button>
   );
