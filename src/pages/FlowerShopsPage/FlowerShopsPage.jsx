@@ -1,24 +1,29 @@
 import css from './FlowerShopsPage.module.css';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { fetchShops, fetchAllFlowers, fetchFlowersByShop } from '../../utils';
+import LoadMoreBtn from '../../components/LoadMoreBtn/LoadMoreBtn';
 import { FlowerList } from '../../components/FlowersList/FlowersList';
 import Loading from '../../components/Loading/Loading';
-import { useState, useEffect, useRef } from 'react';
-import { fetchShops, fetchAllFlowers, fetchFlowersByShop } from '../../utils';
-
-import LoadMoreBtn from '../../components/LoadMoreBtn/LoadMoreBtn';
 
 export function FlowerShopsPage() {
   const [shops, setShops] = useState([]);
   const [flowers, setFlowers] = useState([]);
   const [selectedShopId, setSelectedShopId] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [totalItems, setTotalItems] = useState(0);
   const [page, setPage] = useState(1);
-  const perPage = 12;
+  const perPage = 10;
+  const navigate = useNavigate();
+  const { shopId } = useParams();
   const handleToggleFavorite = id => {
     setFlowers(prev =>
       prev.map(f => (f._id === id ? { ...f, isFavorite: !f.isFavorite } : f))
     );
   };
+  useEffect(() => {
+    if (shopId) setSelectedShopId(shopId);
+  }, [shopId]);
 
   useEffect(() => {
     const getShops = async () => {
@@ -44,11 +49,15 @@ export function FlowerShopsPage() {
         const flowersData = selectedShopId
           ? response.data.data.flowers
           : response.data.data.enrichedFlowers;
+        const pagination = selectedShopId
+          ? response.data.data.pagination
+          : response.data.data;
         if (page === 1) {
           setFlowers(flowersData);
         } else {
           setFlowers(prev => [...prev, ...flowersData]);
         }
+        setTotalItems(pagination.totalItems);
       } catch (error) {
         console.error('Something went wrong!', error);
       } finally {
@@ -57,8 +66,6 @@ export function FlowerShopsPage() {
     };
     getFlowers();
   }, [selectedShopId, page]);
-
-  const totalItems = flowers.length;
 
   const [startIndex, setStartIndex] = useState(null);
 
@@ -107,6 +114,8 @@ export function FlowerShopsPage() {
               onClick={() => {
                 setSelectedShopId(shop._id);
                 setPage(1);
+                setFlowers([]);
+                navigate(`/flowers/${shop._id}`);
               }}
             >
               {shop.name}

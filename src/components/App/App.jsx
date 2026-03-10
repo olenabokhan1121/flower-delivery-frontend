@@ -9,14 +9,14 @@ import Loading from '../Loading/Loading';
 import NotificationToast from '../NotificationToast/NotificationToast';
 
 import { FlowerShopsPage } from '../../pages/FlowerShopsPage/FlowerShopsPage.jsx';
-const OrderDetailsPage = lazy(() =>
-  import('../../pages/OrderDetailsPage/OrderDetailsPage.jsx')
+const OrderDetailsPage = lazy(
+  () => import('../../pages/OrderDetailsPage/OrderDetailsPage.jsx')
 );
-const ShoppingCartPage = lazy(() =>
-  import('../../pages/ShoppingCartPage/ShoppingCartPage.jsx')
+const ShoppingCartPage = lazy(
+  () => import('../../pages/ShoppingCartPage/ShoppingCartPage.jsx')
 );
-const NotFoundPage = lazy(() =>
-  import('../../pages/NotFoundPage/NotFoundPage')
+const NotFoundPage = lazy(
+  () => import('../../pages/NotFoundPage/NotFoundPage')
 );
 
 export default function App() {
@@ -27,7 +27,7 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<FlowerShopsPage />} />
             <Route path="flowers" element={<FlowerShopsPage />} />
-
+            <Route path="flowers/:shopId" element={<FlowerShopsPage />} />
             <Route path="cart" element={<ShoppingCartPage />} />
 
             <Route path="*" element={<NotFoundPage />} />
