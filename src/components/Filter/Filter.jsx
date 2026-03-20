@@ -10,8 +10,8 @@ const Filter = ({ onSortChange, currentSort }) => {
         Sort by price
       </button>
       <button
-        className={currentSort === 'date' ? css.active : ''}
-        onClick={() => onSortChange('date')}
+        className={currentSort === 'createdAt' ? css.active : ''}
+        onClick={() => onSortChange('createdAt')}
       >
         Sort by date
       </button>

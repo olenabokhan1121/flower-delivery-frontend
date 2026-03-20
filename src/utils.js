@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://flower-delivery-app-gj8q.onrender.com/api',
+  baseURL:
+    /*'http://localhost:3000/api', */ 'https://flower-delivery-app-gj8q.onrender.com/api',
   withCredentials: true,
 });
 
@@ -10,7 +11,10 @@ export const fetchShops = () => api.get('/shops');
 export const fetchAllFlowers = params => api.get('/flowers', { params });
 
 export const fetchFlowersByShop = (shopId, params) =>
-  api.get(`/flowers/${shopId}`, { params });
+  api.get(`/flowers/${shopId}`, {
+    params,
+    headers: { 'Cache-Control': 'no-cache' },
+  });
 
 export const addFavoriteFlower = flowerId => api.post(`/favorites/${flowerId}`);
 

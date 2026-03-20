@@ -1,6 +1,6 @@
 import css from './FlowerShopsPage.module.css';
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import { fetchShops, fetchAllFlowers, fetchFlowersByShop } from '../../utils';
 import LoadMoreBtn from '../../components/LoadMoreBtn/LoadMoreBtn';
 import { FlowerList } from '../../components/FlowersList/FlowersList';
@@ -16,6 +16,7 @@ export function FlowerShopsPage() {
   const perPage = 10;
   const navigate = useNavigate();
   const { shopId } = useParams();
+  const { sortBy } = useOutletContext();
   const handleToggleFavorite = id => {
     setFlowers(prev =>
       prev.map(f => (f._id === id ? { ...f, isFavorite: !f.isFavorite } : f))
@@ -40,8 +41,10 @@ export function FlowerShopsPage() {
   useEffect(() => {
     const getFlowers = async () => {
       setLoading(true);
+
       try {
-        const params = { page, perPage };
+        const params = { page, perPage, sortBy };
+
         const response = selectedShopId
           ? await fetchFlowersByShop(selectedShopId, params)
           : await fetchAllFlowers(params);
@@ -52,6 +55,8 @@ export function FlowerShopsPage() {
         const pagination = selectedShopId
           ? response.data.data.pagination
           : response.data.data;
+        console.log('full response', response.data);
+
         if (page === 1) {
           setFlowers(flowersData);
         } else {
@@ -65,7 +70,11 @@ export function FlowerShopsPage() {
       }
     };
     getFlowers();
-  }, [selectedShopId, page]);
+  }, [selectedShopId, page, sortBy]);
+  useEffect(() => {
+    setPage(1);
+    setFlowers([]);
+  }, [sortBy, selectedShopId]);
 
   const [startIndex, setStartIndex] = useState(null);
 

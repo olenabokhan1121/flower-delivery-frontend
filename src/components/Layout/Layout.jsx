@@ -9,7 +9,6 @@ export const Layout = () => {
   const [sortBy, setSortBy] = useState('price');
 
   const handleSortChange = type => {
-    //  далі  пропси до FlowerShopsPage
     setSortBy(type);
   };
   return (
@@ -20,7 +19,7 @@ export const Layout = () => {
         currentSort={sortBy}
       />
       <main style={{ paddingTop: '44px' }}>
-        <Outlet />
+        <Outlet context={{ sortBy }} />
       </main>
     </>
   );
