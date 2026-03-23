@@ -20,3 +20,11 @@ export const addFavoriteFlower = flowerId => api.post(`/favorites/${flowerId}`);
 
 export const removeFavoriteFlower = flowerId =>
   api.delete(`/favorites/${flowerId}`);
+
+export const getCart = () => {
+  return JSON.parse(localStorage.getItem('cart')) || [];
+};
+
+export const saveCart = cart => {
+  localStorage.setItem('cart', JSON.stringify(cart));
+};

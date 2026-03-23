@@ -1,0 +1,454 @@
+/*
+
+import axios from 'axios';
+
+export const CartPage = () => {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    setCart(getCart());
+  }, []);
+
+  const updateQuantity = (id, count) => {
+    const updated = cart.map(item =>
+      item._id === id ? { ...item, count } : item
+    );
+    setCart(updated);
+    saveCart(updated);
+  };
+
+  const removeItem = (id) => {
+    const updated = cart.filter(item => item._id !== id);
+    setCart(updated);
+    saveCart(updated);
+  };
+
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + item.price * item.count,
+    0
+  );
+
+  const handleSubmit = async (values) => {
+    const order = {
+      ...values,
+      items: cart,
+      totalPrice,
+      createdAt: new Date().toISOString(), // timezone-safe
+    };
+
+    await axios.post('/orders', order);
+
+    localStorage.removeItem('cart');
+    setCart([]);
+  };
+
+  return (
+    <div>
+      <h2>Shopping Cart</h2>
+
+      {cart.map(item => (
+        <div key={item._id}>
+          <h4>{item.name}</h4>
+          <p>{item.price} грн</p>
+
+          <input
+            type="number"
+            value={item.count}
+            onChange={(e) =>
+              updateQuantity(item._id, Number(e.target.value))
+            }
+          />
+
+          <button onClick={() => removeItem(item._id)}>
+            Remove
+          </button>
+        </div>
+      ))}
+
+      <h3>Total: {totalPrice}</h3>
+
+      <Formik
+        initialValues={{
+          email: '',
+          phone: '',
+          address: '',
+        }}
+        onSubmit={handleSubmit}
+      >
+        <Form>
+          <Field name="email" placeholder="Email" />
+          <Field name="phone" placeholder="Phone" />
+          <Field name="address" placeholder="Address" />
+
+          <button type="submit">Submit</button>
+        </Form>
+      </Formik>
+    </div>
+  );
+};*/
+/*.title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: #000;
+  margin-bottom: 16px;
+}
+
+.img_recipe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  width: 100%;
+  height: 383px;
+  background-color: #9f9f9f;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.img_recipe:hover {
+  box-shadow: 0 0 20px 0 rgba(155, 108, 67, 0.3);
+}
+
+.cont_img {
+  margin-bottom: 24px;
+}
+
+.icon_photo {
+  width: 82px;
+  height: 82px;
+  fill: none;
+  stroke: #000;
+}
+
+.label {
+  display: block;
+  flex: 1;
+  font-weight: 400;
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 27px;
+}
+
+.label:has(.error) {
+  margin-bottom: 0;
+}
+
+.selectCustom {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("/svg/arrow-down.svg");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  padding-right: 48px;
+}
+
+.field {
+  display: block;
+  width: 100%;
+  border: 1px solid #344e41;
+  border-radius: 8px;
+  padding: 12px;
+  height: 53px;
+  margin-top: 8px;
+  font-weight: 400;
+  font-size: 18px;
+  color: #000;
+  transition: border 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.field:hover,
+.field:focus {
+  border: 1.5px solid #588157;
+}
+
+.field_textarea:hover,
+.field_textarea:focus {
+  border: 1.5px solid #588157;
+}
+
+.field.error {
+  border: 1.5px solid #c80000;
+}
+
+.field_textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid #344e41;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 8px;
+  font-weight: 400;
+  font-size: 18px;
+  color: #000;
+  height: 144px;
+  resize: none;
+  overflow-y: auto;
+  transition: border 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.cal_cat {
+  display: flex;
+  gap: 16px;
+}
+
+.btn_remove {
+  border: 1px solid #344e41;
+  border-radius: 8px;
+  padding: 12px 16px;
+  width: 100%;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  color: #000;
+  margin-bottom: 16px;
+  transition: background-color 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn_remove:hover,
+.btn_remove:focus {
+  background-color: #588157;
+}
+
+.btn_add {
+  border-radius: 8px;
+  padding: 12px 16px;
+  width: 100%;
+  background: #344e41;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 32px;
+  transition: background-color 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn_add:hover,
+.btn_add:focus {
+  background-color: #588157;
+}
+
+.cont_ing {
+  margin-bottom: 32px;
+}
+
+.cont_select_ing {
+  display: flex;
+}
+
+.ing {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000;
+  flex: 1;
+  padding: 16px 0;
+}
+
+.ing_list {
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid #344e41;
+  padding-right: 40px;
+}
+
+.ing_list:first-child {
+  border-top: 1px solid #344e41;
+}
+
+.ing_sel {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #000;
+  flex: 1;
+  padding: 16px 0;
+}
+
+.icon_btn {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  z-index: 1;
+}
+
+.icon_delete {
+  display: block;
+  width: 16px;
+  height: 16px;
+  color: #000;
+  transition: color 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.icon_delete:hover,
+.icon_delete:focus {
+  color: #c80000;
+}
+
+.btn_submit {
+  border-radius: 8px;
+  padding: 12px 16px;
+  width: 100%;
+  background: #344e41;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+  margin-top: 40px;
+  transition: background-color 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn_submit:hover,
+.btn_submit:focus {
+  background-color: #588157;
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 11px;
+}
+
+
+
+.selectPlaceholder option[value=""] {
+  color: grey;
+}
+.selectWrapper {
+  position: relative;
+  display: block;
+}
+
+.selectWrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 48px;
+  background-color: #dad7cd;
+}
+
+.selectArrow {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 16px;
+  height: 8px;
+  fill: #000;
+}
+
+.select_up_down {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 16px;
+  height: 21px;
+  fill: #000;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .title {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+
+  .icon_photo {
+    width: 52px;
+    height: 52px;
+  }
+
+  .cont_ingred {
+    display: flex;
+  }
+
+  .label_name {
+    width: 431px;
+    margin-right: 24px;
+    flex: none;
+  }
+
+  .label_amount {
+    width: 249px;
+  }
+
+  .btn_cont {
+    display: flex;
+  }
+
+  .btn_add {
+    width: 249px;
+    margin-left: auto;
+  }
+
+  .btn_remove {
+    width: 249px;
+    margin-left: auto;
+  }
+
+  .cont_ing {
+    width: 431px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .cont_form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "form img"
+      "form btn";
+    grid-template-rows: auto auto;
+    gap: 8px 24px;
+    position: relative;
+  }
+
+  .cont_img {
+    grid-area: img;
+    align-self: start;
+    position: relative;
+    width: 391px;
+  }
+
+  .cont_for_pc {
+    grid-area: form;
+    width: 809px;
+  }
+
+  .cont_push_btn {
+    grid-area: btn;
+    position: absolute;
+   
+    width: 391px;
+  }
+
+  .btn_submit {
+    margin: 0;
+  }
+
+  .icon_photo {
+    width: 82px;
+    height: 82px;
+  }
+}*/

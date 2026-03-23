@@ -27,13 +27,13 @@
 }
 
 .form {
+  min-height: 44px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .title {
-  height: 43px;
   font-weight: 700;
   font-size: 18px;
   color: #000;
@@ -43,21 +43,26 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent);
+  mask-image: linear-gradient(to bottom, black 60%, transparent);
 }
 
 .Button {
   height: 100%;
-  flex: 1;
   background: transparent;
   border: 1px solid #000;
   border-radius: 8px;
   padding: 8px;
   font-weight: 600;
   font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
 
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+.Button:hover {
+  border-image: linear-gradient(to left, transparent, #000, transparent) 1;
+}
 .learnMoreButton:hover {
   background-color: #588157;
   color: #fff;

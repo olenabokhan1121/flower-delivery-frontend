@@ -18,11 +18,10 @@ const FlowerCard = forwardRef(({ flower, onToggleFavorite }, ref) => {
 
       <div className={styles.form}>
         <h3 className={styles.title}>{name}</h3>
-        <div>
-          <button className={styles.Button} onClick={() => navigate(`/cart`)}>
-            Add to cart
-          </button>
-        </div>
+
+        <button className={styles.Button} onClick={() => navigate(`/cart`)}>
+          Add to cart
+        </button>
       </div>
     </div>
   );

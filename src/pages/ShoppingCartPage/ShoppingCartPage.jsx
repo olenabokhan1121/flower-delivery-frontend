@@ -1,35 +1,45 @@
 import css from './ShoppingCartPage.module.css';
-/*import { logIn, refreshUser } from '../../redux/auth/operations';
-import { selectRefreshing, selectLoggedIn } from '../../redux/auth/selectors';
 
 import toast from 'react-hot-toast';
+import clsx from 'clsx';
+import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useId, useEffect, useState } from 'react';
+import { useId, useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-
-const UserSchema = Yup.object().shape({
-  email: Yup.string()
+import { getCart, saveCart } from '../../utils';
+const initialValues = {
+  userName: '',
+  userEmail: '',
+  userPhone: '',
+  userAddress: '',
+};
+const CartSchema = Yup.object().shape({
+  userName: Yup.string()
+    .min(2, 'Must be min 2 chars!')
+    .max(50, 'Must be max 50 chars!')
+    .required('This field is required'),
+  userEmail: Yup.string()
     .email('Invalid email address')
-    .required('Email is Required'),
-  password: Yup.string()
-    .min(3, 'Too Short!')
-    .max(25, 'Too Long!')
-    .required('Password is Required!'),
-});*/
+    .required('This field is required'),
+  userPhone: Yup.string().required('This field is required'),
+  userAddress: Yup.string().required('This field is required'),
+});
 
 export default function shoppingCart() {
-  /*
+  const nameFieldId = useId();
   const emailFieldId = useId();
-  const passwordFieldId = useId();
+  const phoneFieldId = useId();
+  const addressFieldId = useId();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const inputRef = useRef(null);
 
   const isRefreshing = useSelector(selectRefreshing);
-  const isLoggedIn = useSelector(selectLoggedIn);
+
   const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  /*
 
   useEffect(() => {
     if (shouldRedirect && !isRefreshing && isLoggedIn) {
