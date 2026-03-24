@@ -1,14 +1,13 @@
 import css from './ShoppingCartPage.module.css';
-
+import 'yup-phone';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
-import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useId, useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { getCart, saveCart } from '../../utils';
+import { getCart, saveCart, addOrder } from '../../utils';
 const initialValues = {
   userName: '',
   userEmail: '',
@@ -23,7 +22,9 @@ const CartSchema = Yup.object().shape({
   userEmail: Yup.string()
     .email('Invalid email address')
     .required('This field is required'),
-  userPhone: Yup.string().required('This field is required'),
+  userPhone: Yup.string()
+    .phone('UA', true, 'Not valid number!')
+    .required('This field is required'),
   userAddress: Yup.string().required('This field is required'),
 });
 
@@ -35,17 +36,41 @@ export default function shoppingCart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputRef = useRef(null);
-
-  const isRefreshing = useSelector(selectRefreshing);
-
-  const [shouldRedirect, setShouldRedirect] = useState(false);
-  /*
-
+  const [cart, setCart] = useState([]);
   useEffect(() => {
-    if (shouldRedirect && !isRefreshing && isLoggedIn) {
-      navigate('/');
-    }
-  }, [shouldRedirect, isRefreshing, isLoggedIn, navigate]);*/
+    setCart(getCart());
+  }, []);
+
+  const updateQuantity = (id, count) => {
+    const updated = cart.map(item =>
+      item._id === id ? { ...item, quantity: count } : item
+    );
+    setCart(updated);
+    saveCart(updated);
+  };
+
+  const removeItem = id => {
+    const updated = cart.filter(item => item._id !== id);
+    setCart(updated);
+    saveCart(updated);
+  };
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+  const handleSubmit = async (values, actions) => {
+    const order = {
+      ...values,
+      items: cart,
+      totalPrice,
+      createdAt: new Date().toISOString(), // timezone-safe
+    };
+
+    addOrder(order);
+    localStorage.removeItem('cart');
+    setCart([]);
+    actions.resetForm();
+  };
 
   return (
     /*

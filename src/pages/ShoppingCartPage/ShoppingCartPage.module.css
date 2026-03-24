@@ -1,46 +1,7 @@
 /*
 
-import axios from 'axios';
-
 export const CartPage = () => {
-  const [cart, setCart] = useState([]);
-
-  useEffect(() => {
-    setCart(getCart());
-  }, []);
-
-  const updateQuantity = (id, count) => {
-    const updated = cart.map(item =>
-      item._id === id ? { ...item, count } : item
-    );
-    setCart(updated);
-    saveCart(updated);
-  };
-
-  const removeItem = (id) => {
-    const updated = cart.filter(item => item._id !== id);
-    setCart(updated);
-    saveCart(updated);
-  };
-
-  const totalPrice = cart.reduce(
-    (acc, item) => acc + item.price * item.count,
-    0
-  );
-
-  const handleSubmit = async (values) => {
-    const order = {
-      ...values,
-      items: cart,
-      totalPrice,
-      createdAt: new Date().toISOString(), // timezone-safe
-    };
-
-    await axios.post('/orders', order);
-
-    localStorage.removeItem('cart');
-    setCart([]);
-  };
+  
 
   return (
     <div>

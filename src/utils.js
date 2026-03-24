@@ -21,6 +21,8 @@ export const addFavoriteFlower = flowerId => api.post(`/favorites/${flowerId}`);
 export const removeFavoriteFlower = flowerId =>
   api.delete(`/favorites/${flowerId}`);
 
+export const addOrder = order => api.post('/order', order);
+
 export const getCart = () => {
   return JSON.parse(localStorage.getItem('cart')) || [];
 };
