@@ -1,163 +1,50 @@
-/*import { createSlice } from '@reduxjs/toolkit';
-import {
-  fetchRecipes,
-  fetchRecipesByQuery,
-  toggleFavoriteRecipeAsync,
-  fetchMyRecipes,
-  fetchFavoriteRecipes,
-} from './operations';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  items: [],
-  totalItems: 0,
-  favorites: [],
-  myRecipes: [],
-  searchQuery: '',
-  loading: false,
-  error: null,
-  notFound: false,
+  items: JSON.parse(localStorage.getItem('cart')) || [],
 };
 
-const recipesSlice = createSlice({
-  name: 'recipes',
+const cartSlice = createSlice({
+  name: 'cart',
   initialState,
   reducers: {
-    toggleFavoriteRecipe: (state, action) => {
-      const { id, add } = action.payload;
-      const recipe = state.items.find(r => r._id === id);
-      if (recipe) {
-        recipe.isFavorite = add;
+    addToCart: (state, action) => {
+      const item = action.payload;
+
+      const existing = state.items.find(i => i._id === item._id);
+
+      if (existing) {
+        existing.count += 1;
+      } else {
+        state.items.push({ ...item, count: 1 });
       }
+
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
-    setSearchQuery: (state, action) => {
-      state.searchQuery = action.payload;
+
+    removeFromCart: (state, action) => {
+      state.items = state.items.filter(i => i._id !== action.payload);
+
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
-    clearNotFound: state => {
-      state.notFound = false;
+
+    updateQuantity: (state, action) => {
+      const { id, count } = action.payload;
+
+      const item = state.items.find(i => i._id === id);
+      if (item) item.count = count;
+
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
-    addNewRecipe: (state, action) => {
-      state.items.unshift(action.payload);
-      state.myRecipes.unshift(action.payload);
-      state.totalItems += 1;
-    },
-    clearRecipes: state => {
+
+    clearCart: state => {
       state.items = [];
-      state.totalItems = 0;
-      state.notFound = false;
-      state.error = null;
+      localStorage.removeItem('cart');
     },
-  },
-
-  extraReducers: builder => {
-    builder
-      .addCase(fetchRecipes.pending, state => {
-        state.loading = true;
-        state.error = null;
-        state.notFound = false;
-      })
-      .addCase(fetchRecipes.fulfilled, (state, action) => {
-        const { items, totalItems, append } = action.payload;
-
-        state.items = append
-          ? [
-              ...state.items,
-              ...items.filter(
-                item => !state.items.find(r => r._id === item._id)
-              ),
-            ]
-          : items;
-
-        state.totalItems = totalItems;
-        state.loading = false;
-        state.notFound = items.length === 0;
-      })
-      .addCase(fetchRecipes.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || action.error.message;
-      })
-
-      .addCase(fetchRecipesByQuery.pending, state => {
-        state.loading = true;
-        state.error = null;
-        state.notFound = false;
-      })
-      .addCase(fetchRecipesByQuery.fulfilled, (state, action) => {
-        state.items = action.payload.items;
-        state.totalItems = action.payload.totalItems;
-        state.loading = false;
-        state.notFound = action.payload.items.length === 0;
-      })
-      .addCase(fetchRecipesByQuery.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || action.error.message;
-      })
-      .addCase(toggleFavoriteRecipeAsync.pending, state => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(toggleFavoriteRecipeAsync.fulfilled, (state, action) => {
-        const { recipeId, add, mode } = action.payload;
-        if (mode === 'favorites' && !add) {
-          state.items = state.items.filter(recipe => recipe._id !== recipeId);
-          state.totalItems -= 1;
-        } else {
-          const recipe = state.items.find(r => r._id === recipeId);
-          if (recipe) {
-            recipe.isFavorite = add;
-          }
-        }
-        state.loading = false;
-      })
-      .addCase(toggleFavoriteRecipeAsync.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || action.error.message;
-      })
-      .addCase(fetchMyRecipes.pending, state => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchMyRecipes.fulfilled, (state, action) => {
-        if (action.payload.append) {
-          state.items = [...state.items, ...action.payload.items];
-        } else {
-          state.items = action.payload.items;
-        }
-        state.totalItems = action.payload.totalItems;
-        state.loading = false;
-      })
-      .addCase(fetchMyRecipes.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || action.error.message;
-      })
-
-      .addCase(fetchFavoriteRecipes.pending, state => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
-        if (action.payload.append) {
-          state.items = [...state.items, ...action.payload.items]; // додаємо до списку
-        } else {
-          state.items = action.payload.items; // перезаписуємо список
-        }
-
-        state.totalItems = action.payload.totalItems;
-        state.loading = false;
-      })
-
-      .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || action.error.message;
-      });
   },
 });
 
-export const {
-  toggleFavoriteRecipe,
-  setSearchQuery,
-  clearNotFound,
-  addNewRecipe,
-  clearRecipes,
-} = recipesSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, clearCart } =
+  cartSlice.actions;
 
-export const recipesReducer = recipesSlice.reducer;*/
+export default cartSlice.reducer;
