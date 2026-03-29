@@ -23,10 +23,10 @@ export const removeFavoriteFlower = flowerId =>
 
 export const addOrder = order => api.post('/order', order);
 
-export const getCart = () => {
+/*export const getCart = () => {
   return JSON.parse(localStorage.getItem('cart')) || [];
-};
+};*/
 
-export const saveCart = cart => {
+/*export const saveCart = cart => {
   localStorage.setItem('cart', JSON.stringify(cart));
-};
+};*/

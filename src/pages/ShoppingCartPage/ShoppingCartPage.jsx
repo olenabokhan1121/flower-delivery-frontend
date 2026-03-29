@@ -7,7 +7,13 @@ import * as Yup from 'yup';
 import { useId, useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { getCart, saveCart, addOrder } from '../../utils';
+import { addOrder } from '../../utils';
+//import loading from '../../components/Loading/Loading';
+import {
+  removeFromCart,
+  updateQuantity,
+  clearCart,
+} from '../../redux/cart/slice';
 const initialValues = {
   userName: '',
   userEmail: '',
@@ -36,33 +42,21 @@ export default function shoppingCart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputRef = useRef(null);
-  const [cart, setCart] = useState([]);
-
-  useEffect(() => {
-    setCart(getCart());
-  }, []);
-  useEffect(() => {
-    const updated = cart.map(item =>
-      !item.count ? { ...item, count: 1 } : item
-    );
-    setCart(updated);
-    saveCart(updated);
-  }, []);
-  const updateQuantity = (id, count) => {
-    const updated = cart.map(item =>
-      item._id === id ? { ...item, count } : item
-    );
-    setCart(updated);
-    saveCart(updated);
+  //const [loading, setLoading] = useState(false);
+  const cart = useSelector(state => state.cart.items);
+  const handleUpdateQuantity = (id, count) => {
+    if (count === 0) {
+      dispatch(removeFromCart(id));
+    }
+    dispatch(updateQuantity({ id, count }));
   };
 
-  const removeItem = id => {
-    const updated = cart.filter(item => item._id !== id);
-    setCart(updated);
-    saveCart(updated);
+  const handleRemoveItem = id => {
+    dispatch(removeFromCart(id));
   };
+
   const totalPrice = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + item.price * item.count,
     0
   );
   const handleSubmit = async (values, actions) => {
@@ -74,8 +68,7 @@ export default function shoppingCart() {
     };
 
     dispatch(addOrder(order));
-    localStorage.removeItem('cart');
-    setCart([]);
+    dispatch(clearCart());
     actions.resetForm();
   };
 
@@ -139,7 +132,7 @@ export default function shoppingCart() {
             <button
               type="submit"
               className={styles.button}
-              onClick={() => navigate(`/order`)}
+              onClick={() => navigate('/order')}
             >
               Submit
             </button>
@@ -155,10 +148,12 @@ export default function shoppingCart() {
             <input
               type="number"
               value={item.count}
-              onChange={e => updateQuantity(item._id, Number(e.target.value))}
+              onChange={e =>
+                handleUpdateQuantity(item._id, Number(e.target.value))
+              }
             />
 
-            <button onClick={() => removeItem(item._id)}>Remove</button>
+            <button onClick={() => handleRemoveItem(item._id)}>Remove</button>
           </div>
         ))}
 

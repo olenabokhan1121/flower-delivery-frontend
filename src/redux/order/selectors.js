@@ -6,8 +6,7 @@ export const selectLoading = (state) => state.recipes.loading;
 export const selectError = (state) => state.recipes.error;
 export const selectNotFound = (state) => state.recipes.notFound;
 
-//export const selectFavoriteRecipes = (state) =>
-//state.recipes.items.filter((recipe) => recipe.isFavorite);
+
 export const selectFavoriteRecipes = createSelector(
   [selectRecipes],
   (recipes) => recipes.filter((recipe) => recipe.isFavorite)

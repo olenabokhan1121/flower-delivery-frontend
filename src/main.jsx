@@ -4,19 +4,13 @@ import 'modern-normalize';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './components/App/App.jsx';
-//import Loading from './components/Loading/Loading.jsx';
+import Loading from './components/Loading/Loading.jsx';
 
-//import { Provider } from 'react-redux';
-//import { store, persistor } from './redux/store';
-//import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
+import { store, persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>
-);
-/*createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={<Loading />} persistor={persistor}>
@@ -27,4 +21,3 @@ createRoot(document.getElementById('root')).render(
     </Provider>
   </StrictMode>
 );
-*/
