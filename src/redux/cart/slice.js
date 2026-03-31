@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCart, saveCart } from '../../utils.js';
+//import { getCart, saveCart } from '../../utils.js';
 const initialState = {
   //items: getCart('cart'),    persist працює автоматично
   items: [],
@@ -43,54 +43,5 @@ export const { addToCart, removeFromCart, updateQuantity, clearCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
-/*
 
-
-в картці квітки
-
-import { useDispatch } from 'react-redux';
-
-import {
-  addToCart
-} from '../../redux/cart/slice';
-<button
-  className={styles.Button}
-  onClick={() => {
-    dispatch(addToCart(flower));
-    navigate('/cart');
-  }}
->
-  Add to cart
-</button>*/
-/*// src/redux/cart/cartPersist.js
-
-import storage from 'redux-persist/lib/storage';
-import { persistReducer } from 'redux-persist';
-import cartReducer from './cartSlice';
-
-const cartPersistConfig = {
-  key: 'cart',
-  storage,
-  
-};
-
-export const persistedCartReducer = persistReducer(
-  cartPersistConfig,
-  cartReducer
-);*/
-/* в сторі 
-import { configureStore } from '@reduxjs/toolkit';
-import { persistedCartReducer } from './cart/cartPersist';
-import orderReducer from './orderSlice';
-
-import { persistStore } from 'redux-persist';
-
-export const store = configureStore({
-  reducer: {
-    cart: persistedCartReducer, // 🔥 ось тут
-    order: orderReducer,
-  },
-});
-
-export const persistor = persistStore(store);*/
 /* handlesubmit перевірити з обєктом на беці логіку і що отримує бекенд але це вже мабуть orderslice*/

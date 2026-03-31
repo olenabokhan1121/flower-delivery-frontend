@@ -143,8 +143,12 @@ export default function shoppingCart() {
         {cart.map(item => (
           <div key={item._id}>
             <h4>{item.name}</h4>
-            <p>{item.price} grn</p>
-
+            <p>{item.price}$</p>
+            <img
+              src={item.imageUrl}
+              alt={item.name}
+              className={css.imageCard}
+            />
             <input
               type="number"
               value={item.count}
@@ -156,9 +160,8 @@ export default function shoppingCart() {
             <button onClick={() => handleRemoveItem(item._id)}>Remove</button>
           </div>
         ))}
-
-        <h3>Total: {totalPrice}</h3>
       </div>
+      <h3>Total: {totalPrice}$</h3>
     </div>
   );
 }
