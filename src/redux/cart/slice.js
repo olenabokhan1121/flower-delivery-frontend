@@ -45,3 +45,5 @@ export const { addToCart, removeFromCart, updateQuantity, clearCart } =
 export default cartSlice.reducer;
 
 /* handlesubmit перевірити з обєктом на беці логіку і що отримує бекенд але це вже мабуть orderslice*/
+/* перевірка щоб інпут був не більше кількісті в наявності і тоастер повідомлення*/
+/*зробити кнопку сабміт disabled поки всі поля не заповнені і хоч одна квітка*/

@@ -1,6 +1,6 @@
 import css from './ShoppingCartPage.module.css';
 //import toast from 'react-hot-toast';
-//import clsx from 'clsx';
+import clsx from 'clsx';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 //import yupPhone from 'yup-phone';
@@ -77,102 +77,115 @@ export default function shoppingCart() {
 
   return (
     <div className={css.pageWrapper}>
-      <div className={css.user_form_input}>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={CartSchema}
-          onSubmit={handleSubmit}
-        >
-          <Form>
-            <label htmlFor={nameFieldId} className={css.label}>
-              Name:
-            </label>
-            <Field
-              type="text"
-              name="userName"
-              id={nameFieldId}
-              className={css.input}
-              placeholder="Name"
-            />
-            <ErrorMessage
-              name="userName"
-              component="div"
-              className={css.error}
-            />
-            <label htmlFor={emailFieldId} className={css.label}>
-              Email:
-            </label>
-            <Field
-              type="email"
-              name="userEmail"
-              id={emailFieldId}
-              className={css.input}
-              placeholder="email@gmail.com"
-            />
-            <ErrorMessage
-              name="userEmail"
-              component="div"
-              className={css.error}
-            />
-            <label htmlFor={phoneFieldId} className={css.label}>
-              Phone:
-            </label>
-            <Field
-              type="text"
-              name="userPhone"
-              id={phoneFieldId}
-              className={css.input}
-              placeholder="Phone"
-            />
-            <ErrorMessage
-              name="userPhone"
-              component="div"
-              className={css.error}
-            />
-            <label htmlFor={addressFieldId} className={css.label}>
-              Address:
-            </label>
-            <Field
-              type="text"
-              name="userAddress"
-              id={addressFieldId}
-              className={css.input}
-              placeholder="Address"
-            />
-            <ErrorMessage
-              name="userAddress"
-              component="div"
-              className={css.error}
-            />
-            <button type="submit" className={css.button}>
-              Submit
-            </button>
-          </Form>
-        </Formik>
-      </div>
-      <div className={css.user_form_cart}>
-        {cart.map(item => (
-          <div key={item._id}>
-            <h4>{item.name}</h4>
-            <p>{item.price}$</p>
-            <img
-              src={item.imageUrl}
-              alt={item.name}
-              className={css.imageCard}
-            />
-            <input
-              type="number"
-              value={item.count}
-              onChange={e =>
-                handleUpdateQuantity(item._id, Number(e.target.value))
-              }
-            />
+      <Formik
+        initialValues={initialValues}
+        validationSchema={CartSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ handleSubmit }) => (
+          <>
+            <div className={clsx(css.user, css.form_input)}>
+              <Form id="order-form">
+                <label htmlFor={nameFieldId} className={css.label}>
+                  Name:
+                </label>
+                <Field
+                  type="text"
+                  name="userName"
+                  id={nameFieldId}
+                  className={css.input}
+                  placeholder="Name"
+                />
+                <ErrorMessage
+                  name="userName"
+                  component="div"
+                  className={css.error}
+                />
+                <label htmlFor={emailFieldId} className={css.label}>
+                  Email:
+                </label>
+                <Field
+                  type="email"
+                  name="userEmail"
+                  id={emailFieldId}
+                  className={css.input}
+                  placeholder="email@gmail.com"
+                />
+                <ErrorMessage
+                  name="userEmail"
+                  component="div"
+                  className={css.error}
+                />
+                <label htmlFor={phoneFieldId} className={css.label}>
+                  Phone:
+                </label>
+                <Field
+                  type="text"
+                  name="userPhone"
+                  id={phoneFieldId}
+                  className={css.input}
+                  placeholder="Phone"
+                />
+                <ErrorMessage
+                  name="userPhone"
+                  component="div"
+                  className={css.error}
+                />
+                <label htmlFor={addressFieldId} className={css.label}>
+                  Address:
+                </label>
+                <Field
+                  type="text"
+                  name="userAddress"
+                  id={addressFieldId}
+                  className={css.input}
+                  placeholder="Address"
+                />
+                <ErrorMessage
+                  name="userAddress"
+                  component="div"
+                  className={css.error}
+                />
+              </Form>
+            </div>
+            <div className={clsx(css.user, css.form_cart)}>
+              {cart.map(item => (
+                <div key={item._id}>
+                  <h4>{item.name}</h4>
+                  <p>{item.price}$</p>
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className={css.imageCard}
+                  />
+                  <input
+                    type="number"
+                    value={item.count}
+                    onChange={e =>
+                      handleUpdateQuantity(item._id, Number(e.target.value))
+                    }
+                  />
 
-            <button onClick={() => handleRemoveItem(item._id)}>Remove</button>
-          </div>
-        ))}
-      </div>
-      <h3>Total: {totalPrice}$</h3>
+                  <button onClick={() => handleRemoveItem(item._id)}>
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className={css.bottomRow}>
+              <p className={css.totalPrice}>Total: {totalPrice}$</p>
+
+              <button
+                type="submit"
+                form="order-form" // прив'язка зовнішньої кнопки до форми
+                className={css.button}
+              >
+                Submit
+              </button>
+            </div>
+          </>
+        )}
+      </Formik>
     </div>
   );
 }
