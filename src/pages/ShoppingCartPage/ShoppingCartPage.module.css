@@ -16,13 +16,6 @@
   border-radius: 8px;
   border: 2px solid var(--gray);
 }
-.imageCard {
-  width: 160px;
-  height: 80px;
-  object-fit: cover;
-
-  flex-shrink: 0;
-}
 .form_input {
   padding: 16px;
 }
@@ -36,15 +29,57 @@
   padding-right: 8px;
   scrollbar-gutter: stable;
 }
-.scrollWrap ::-webkit-scrollbar {
+.scrollWrap::-webkit-scrollbar {
   width: 6px;
 }
-.scrollWrap ::-webkit-scrollbar-thumb {
+.scrollWrap::-webkit-scrollbar-thumb {
   background: #999;
   border-radius: 4px;
 }
-.scrollWrap ::-webkit-scrollbar-track {
+.scrollWrap::-webkit-scrollbar-track {
   background: transparent;
+}
+.item_wrap {
+  border-radius: 8px;
+  border: 2px solid var(--gray);
+  padding: 8px 24px 12px 8px;
+}
+.item_wrap:not(:last-child) {
+  margin-bottom: 8px;
+}
+.flexWrap {
+  display: flex;
+  align-items: center;
+  /*justify-content: flex-end;*/
+}
+.itemName {
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.itemPrice {
+  color: #000;
+  margin-bottom: 8px;
+}
+.imageCard {
+  width: 160px;
+  height: 80px;
+  object-fit: cover;
+  margin-left: 0;
+  flex-shrink: 0;
+  /*margin-right: 36px;*/
+}
+.count_input {
+  border-radius: 8px;
+  border: 2px solid var(--gray);
+  padding: 4px;
+  width: 48px;
+  margin-right: 12px;
+  margin-left: auto;
+}
+.removeBtn {
+  padding: 4px;
+  border-radius: 8px;
 }
 .bottomRow {
   flex-basis: 100%;
@@ -57,16 +92,18 @@
 .totalPrice {
   font-weight: 600;
   font-size: 18px;
+  color: #000;
 }
 
 .button {
   padding: 8px 16px;
+  border-radius: 8px;
 }
 /*.title {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 24px;
-  color: #000;
+ 
   margin-bottom: 16px;
 }
 
