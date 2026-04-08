@@ -149,28 +149,33 @@ export default function shoppingCart() {
               </Form>
             </div>
             <div className={clsx(css.user, css.form_cart)}>
-              {cart.map(item => (
-                <div key={item._id}>
-                  <h4>{item.name}</h4>
-                  <p>{item.price}$</p>
-                  <img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className={css.imageCard}
-                  />
-                  <input
-                    type="number"
-                    value={item.count}
-                    onChange={e =>
-                      handleUpdateQuantity(item._id, Number(e.target.value))
-                    }
-                  />
+              <div className={css.scrollWrap}>
+                {cart.map(item => (
+                  <div key={item._id}>
+                    <h4>{item.name}</h4>
+                    <p>{item.price}$</p>
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      className={css.imageCard}
+                    />
+                    <input
+                      type="number"
+                      value={item.count}
+                      onChange={e =>
+                        handleUpdateQuantity(item._id, Number(e.target.value))
+                      }
+                    />
 
-                  <button onClick={() => handleRemoveItem(item._id)}>
-                    Remove
-                  </button>
-                </div>
-              ))}
+                    <button
+                      className={css.removeBtn}
+                      onClick={() => handleRemoveItem(item._id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className={css.bottomRow}>
               <p className={css.totalPrice}>Total: {totalPrice}$</p>
