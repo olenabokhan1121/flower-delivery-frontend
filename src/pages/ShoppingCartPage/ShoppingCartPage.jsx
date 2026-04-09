@@ -1,10 +1,10 @@
 import css from './ShoppingCartPage.module.css';
-//import toast from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import clsx from 'clsx';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 //import yupPhone from 'yup-phone';
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addOrder } from '../../utils';
@@ -36,19 +36,20 @@ const CartSchema = Yup.object().shape({
   userAddress: Yup.string().required('This field is required'),
 });
 
-export default function shoppingCart() {
+export default function ShoppingCart() {
   const nameFieldId = useId();
   const emailFieldId = useId();
   const phoneFieldId = useId();
   const addressFieldId = useId();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  //const [loading, setLoading] = useState(false);
+  const [errorId, setErrorId] = useState(null);
+  const [loading, setLoading] = useState(false);
   const cart = useSelector(state => state.cart.items);
   const handleUpdateQuantity = (id, count) => {
     if (count === 0) {
       dispatch(removeFromCart(id));
+      return;
     }
     dispatch(updateQuantity({ id, count }));
   };
@@ -70,9 +71,10 @@ export default function shoppingCart() {
     };
 
     await addOrder(order);
+    //toast.success('Order successfully placed! 🎉');
     dispatch(clearCart());
     actions.resetForm();
-    navigate('/order');
+    navigate('/order', { state: { success: true } });
   };
 
   return (
@@ -166,11 +168,26 @@ export default function shoppingCart() {
                         className={css.count_input}
                         type="number"
                         value={item.count}
-                        onChange={e =>
-                          handleUpdateQuantity(item._id, Number(e.target.value))
-                        }
-                      />
+                        onChange={e => {
+                          if (e.target.value === '') {
+                            return;
+                          }
+                          const value = Number(e.target.value);
 
+                          if (value > item.quantity) {
+                            setErrorId(item._id);
+                            return;
+                          }
+                          setErrorId(null);
+
+                          handleUpdateQuantity(item._id, value);
+                        }}
+                      />
+                      {errorId === item._id && (
+                        <p className={css.error}>
+                          The entered quantity exceeds the available quantity😢
+                        </p>
+                      )}
                       <button
                         className={css.removeBtn}
                         onClick={() => handleRemoveItem(item._id)}
