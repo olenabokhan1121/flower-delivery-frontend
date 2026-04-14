@@ -70,7 +70,7 @@ li {
 button {
   background-color: var(--button);
   color: #fff;
-  transition: background-color 0.3s ease;
+  transition: background-color 250ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 button:hover {

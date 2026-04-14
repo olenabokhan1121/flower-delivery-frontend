@@ -88,66 +88,74 @@ export default function ShoppingCart() {
           <>
             <div className={clsx(css.user, css.form_input)}>
               <Form id="order-form">
-                <label htmlFor={nameFieldId} className={css.label}>
-                  Name:
-                </label>
-                <Field
-                  type="text"
-                  name="userName"
-                  id={nameFieldId}
-                  className={css.input}
-                  placeholder="Name"
-                />
-                <ErrorMessage
-                  name="userName"
-                  component="div"
-                  className={css.error}
-                />
-                <label htmlFor={emailFieldId} className={css.label}>
-                  Email:
-                </label>
-                <Field
-                  type="email"
-                  name="userEmail"
-                  id={emailFieldId}
-                  className={css.input}
-                  placeholder="email@gmail.com"
-                />
-                <ErrorMessage
-                  name="userEmail"
-                  component="div"
-                  className={css.error}
-                />
-                <label htmlFor={phoneFieldId} className={css.label}>
-                  Phone:
-                </label>
-                <Field
-                  type="text"
-                  name="userPhone"
-                  id={phoneFieldId}
-                  className={css.input}
-                  placeholder="Phone"
-                />
-                <ErrorMessage
-                  name="userPhone"
-                  component="div"
-                  className={css.error}
-                />
-                <label htmlFor={addressFieldId} className={css.label}>
-                  Address:
-                </label>
-                <Field
-                  type="text"
-                  name="userAddress"
-                  id={addressFieldId}
-                  className={css.input}
-                  placeholder="Address"
-                />
-                <ErrorMessage
-                  name="userAddress"
-                  component="div"
-                  className={css.error}
-                />
+                <div className={css.fieldWrap}>
+                  <label htmlFor={nameFieldId} className={css.label}>
+                    Name:
+                  </label>
+                  <Field
+                    type="text"
+                    name="userName"
+                    id={nameFieldId}
+                    className={css.input}
+                    placeholder="Name"
+                  />
+                  <ErrorMessage
+                    name="userName"
+                    component="div"
+                    className={css.error}
+                  />
+                </div>
+                <div className={css.fieldWrap}>
+                  <label htmlFor={emailFieldId} className={css.label}>
+                    Email:
+                  </label>
+                  <Field
+                    type="email"
+                    name="userEmail"
+                    id={emailFieldId}
+                    className={css.input}
+                    placeholder="email@gmail.com"
+                  />
+                  <ErrorMessage
+                    name="userEmail"
+                    component="div"
+                    className={css.error}
+                  />
+                </div>
+                <div className={css.fieldWrap}>
+                  <label htmlFor={phoneFieldId} className={css.label}>
+                    Phone:
+                  </label>
+                  <Field
+                    type="text"
+                    name="userPhone"
+                    id={phoneFieldId}
+                    className={css.input}
+                    placeholder="Phone"
+                  />
+                  <ErrorMessage
+                    name="userPhone"
+                    component="div"
+                    className={css.error}
+                  />
+                </div>
+                <div className={css.fieldWrap}>
+                  <label htmlFor={addressFieldId} className={css.label}>
+                    Address:
+                  </label>
+                  <Field
+                    as="textarea"
+                    name="userAddress"
+                    id={addressFieldId}
+                    className={css.textarea}
+                    placeholder="Enter your address"
+                  />
+                  <ErrorMessage
+                    name="userAddress"
+                    component="div"
+                    className={css.error}
+                  />
+                </div>
               </Form>
             </div>
             <div className={clsx(css.user, css.form_cart)}>
