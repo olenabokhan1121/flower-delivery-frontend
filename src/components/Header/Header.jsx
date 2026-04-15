@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Filter from '../Filter/Filter';
 import css from './Header.module.css';
 const Header = ({ showFilter, onSortChange, currentSort }) => {
@@ -6,13 +6,23 @@ const Header = ({ showFilter, onSortChange, currentSort }) => {
     <header className={css.header}>
       <div className={css.container}>
         <nav className={css.nav}>
-          <Link className={css.link} to="/flowers">
+          <NavLink
+            to="/flowers"
+            className={({ isActive }) =>
+              isActive ? `${css.link} ${css.active}` : css.link
+            }
+          >
             Shop
-          </Link>
+          </NavLink>
           <span className={css.divider}></span>
-          <Link className={css.link} to="/cart">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? `${css.link} ${css.active}` : css.link
+            }
+            to="/cart"
+          >
             Shopping Cart
-          </Link>
+          </NavLink>
         </nav>
         <div className={css.sort}>
           {showFilter && (

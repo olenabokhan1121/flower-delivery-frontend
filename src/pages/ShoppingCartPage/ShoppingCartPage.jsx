@@ -8,12 +8,12 @@ import { useId, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addOrder } from '../../utils';
-//import loading from '../../components/Loading/Loading';
 import {
   removeFromCart,
   updateQuantity,
   clearCart,
 } from '../../redux/cart/slice';
+import Loading from '../../components/Loading/Loading';
 //yupPhone(Yup);
 const initialValues = {
   userName: '',
@@ -44,7 +44,6 @@ export default function ShoppingCart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errorId, setErrorId] = useState(null);
-  const [loading, setLoading] = useState(false);
   const cart = useSelector(state => state.cart.items);
   const handleUpdateQuantity = (id, count) => {
     if (count === 0) {
@@ -63,18 +62,39 @@ export default function ShoppingCart() {
     0
   );
   const handleSubmit = async (values, actions) => {
-    const order = {
-      ...values,
-      items: cart,
-      totalPrice,
-      createdAt: new Date().toISOString(), // timezone-safe
-    };
+    try {
+      /*const order = {
+        ...values,
+        items: cart,
+        totalPrice,
+        createdAt: new Date().toISOString(), // timezone-safe
+      };
+*/
+      const order = {
+        items: cart.map(item => ({
+          flowerId: item._id,
+          shopId: item.shopId,
+          name: item.name,
+          quantity: item.count,
+        })),
+        totalPrice,
+        customer: {
+          name: values.userName,
+          phone: values.userPhone,
+          email: values.userEmail,
+          address: values.userAddress,
+        },
+      };
+      await addOrder(order);
 
-    await addOrder(order);
-    //toast.success('Order successfully placed! 🎉');
-    dispatch(clearCart());
-    actions.resetForm();
-    navigate('/order', { state: { success: true } });
+      dispatch(clearCart());
+      actions.resetForm();
+      navigate('/order', { state: { success: true } });
+    } catch (error) {
+      toast.error('Something went wrong 😢');
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   return (
@@ -83,8 +103,9 @@ export default function ShoppingCart() {
         initialValues={initialValues}
         validationSchema={CartSchema}
         onSubmit={handleSubmit}
+        validateOnMount
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, isValid, dirty, isSubmitting }) => (
           <>
             <div className={clsx(css.user, css.form_input)}>
               <Form id="order-form">
@@ -214,8 +235,11 @@ export default function ShoppingCart() {
                 type="submit"
                 form="order-form" // прив'язка зовнішньої кнопки до форми
                 className={css.button}
+                disabled={
+                  !isValid || !dirty || cart.length === 0 || isSubmitting
+                }
               >
-                Submit
+                {isSubmitting ? <Loading /> : 'Submit'}
               </button>
             </div>
           </>

@@ -31,8 +31,12 @@
 }
 
 .link:hover,
+.link:focus,
 .link.active {
   color: var(--button-hover);
+}
+.active {
+  transform: scale(1.08);
 }
 
 .divider {

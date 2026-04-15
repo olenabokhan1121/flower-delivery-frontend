@@ -1,5 +1,9 @@
-import { useLocation } from "react-router-dom";
-export default function shoppingCart() {
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import css from './OrderDetailsPage.module.css';
+
+export default function OrderCart() {
   const location = useLocation();
 
   useEffect(() => {

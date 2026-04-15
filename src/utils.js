@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL:
-    /*'http://localhost:3000/api', */ 'https://flower-delivery-app-gj8q.onrender.com/api',
+    /*'http://localhost:3000/api' */ 'https://flower-delivery-app-gj8q.onrender.com/api',
   withCredentials: true,
 });
 

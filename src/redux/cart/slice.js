@@ -43,7 +43,3 @@ export const { addToCart, removeFromCart, updateQuantity, clearCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
-
-/* handlesubmit перевірити з обєктом на беці логіку і що отримує бекенд але це вже мабуть orderslice*/
-
-/*зробити кнопку сабміт disabled поки всі поля не заповнені і хоч одна квітка*/
