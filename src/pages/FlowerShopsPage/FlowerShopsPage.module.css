@@ -5,19 +5,36 @@
 .aside {
   width: 250px;
   background-color: var(--badges);
-  padding: 8px;
-}
-.ul {
+  padding: 24px 12px;
   border: 2px solid var(--gray);
-  border-radius: 2px;
+  border-radius: 8px;
+  margin: 16px;
 }
+
 .li {
   margin-bottom: 24px;
   border: 2px solid var(--gray);
-  border-radius: 2px;
+  border-radius: 4px;
   color: var(--button);
+  padding: 4px;
+  transition: transform 0.2s ease;
+}
+.li:hover,
+.li:focus {
+  transform: scale(1.05);
 }
 .activeLi {
   font-weight: bold;
   background-color: var(--button-hover);
+  margin-bottom: 24px;
+  padding: 4px;
+  border-radius: 4px;
+}
+.content {
+  flex: 1;
+
+  border: 2px solid var(--gray);
+  padding: 24px;
+  border-radius: 8px;
+  margin: 16px;
 }

@@ -8,13 +8,15 @@ export default function OrderCart() {
 
   useEffect(() => {
     if (location.state?.success) {
-      toast.success('Order successfully placed! 🎉');
+      toast.success('Order successfully placed! 🎉', {
+        id: 'order-success', //прибираю повторний тост
+      });
     }
   }, [location.state]);
   return (
     /*
     <div className={css.pageWrapper}>
       <div className={css.card}>*/
-    <h2 className={css.title}>order</h2>
+    <h2 className={css.title}>✨Thank you for your order!!!✨</h2>
   );
 }

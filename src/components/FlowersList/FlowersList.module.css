@@ -2,7 +2,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
   gap: 24px;
-  border: 2px solid var(--gray);
+  align-items: start;
+  margin-bottom: 24px;
 }
 
 .noFlowersText {

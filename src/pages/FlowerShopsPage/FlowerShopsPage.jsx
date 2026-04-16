@@ -13,7 +13,7 @@ export function FlowerShopsPage() {
   const [loading, setLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  const perPage = 6;
   const navigate = useNavigate();
   const { shopId } = useParams();
   const { sortBy } = useOutletContext();
@@ -136,7 +136,7 @@ export function FlowerShopsPage() {
       {loading ? (
         <Loading />
       ) : (
-        <>
+        <div className={css.content}>
           <FlowerList
             flowers={flowers}
             loading={false}
@@ -145,7 +145,7 @@ export function FlowerShopsPage() {
             onToggleFavorite={handleToggleFavorite}
           />
           {page * perPage < totalItems && <LoadMoreBtn onClick={loadMore} />}
-        </>
+        </div>
       )}
     </div>
   );
